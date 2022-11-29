@@ -1,53 +1,80 @@
-// delete node at value 
-#include<iostream>
-using namespace std;
+//write a program to implement singly linked list with deletion based 
+// item and insertion a new node to the ascending order.
+#include<stdio.h>
+#include<stdlib.h>
+
 struct  node 
 {
     int data ;
-    node*next;
+   struct node*next;
 
 };
-void addAtBeg(int data,node**s)
+void addAtBeg(struct node**s,int item)
 {
-    node*ptr= new node();
-    ptr->data= data;
-    ptr->next = *s;
-    *s = ptr;
-
-}
-void display(node*head )
-{
-    if(head == NULL)
+    struct node *ptr = (struct node *) malloc (sizeof(struct node));
+    struct node*temp=*s; 
+    if(ptr==NULL)
     {
-        cout << "List is empty "<< endl;
-        return ;
+        printf("linkedlist is full ");
     }
+
+    else
+    {
+        if (*s==NULL||item<temp->data)
+        {
+            ptr->data=item;
+            ptr->next=*s;
+            *s=ptr;
+        }
         
-    node* temp = head;
-
-    while(temp != NULL )
-    {
-        cout << temp -> data<< " ";
-        temp = temp -> next;
+        else
+        { 
+            while(temp->next!=NULL)
+            {  
+                if(temp->next->data<item)
+                {
+                    temp=temp->next;
+                }
+            } 
+                ptr->data=item;
+                ptr->next=temp->next;
+                temp->next=ptr;
+         }
     }
- 
-     cout << endl;
 }
-void delAtVal(int key,node **s)
+void display(struct node *head)
 {
-      node * temp =*s;
-      node* ptr;
-      node*pre;
+    if (head == NULL)
+    {
+       printf ( "List is empty \n");
+        return;
+    }
+
+    struct node *temp = head;
+
+    while (temp != NULL)
+    {
+        printf(" %d ",temp->data );
+        temp = temp->next;
+    }
+
+    printf("\n");
+}
+void delAtVal(int key,struct node **s)
+{
+      struct node * temp =*s;
+      struct node* ptr;
+      struct node*pre;
 
       if( temp==NULL)
       {
-            cout<<"Empty\n";
+            printf("Empty\n");
       }
       else if(temp->data==key)
       { 
-            ptr=*s;
-            *s=temp->next;
-            cout<<" value "<<ptr->data<<" \n";
+            ptr = *s;
+            *s  = temp->next;
+            printf(" value %d  \n",ptr->data);
             free(ptr);
             return;
       }
@@ -66,16 +93,17 @@ void delAtVal(int key,node **s)
                   return;
                }
           }
+          printf(" element are not present \n ");
      }      
 }
 int main ()
 {  
-      node*head=NULL;
-      addAtBeg(7,&head);
-      addAtBeg(88,&head);
-      // addAtBeg(6,&head);
-      // addAtBeg(9,&head);
-      // addAtBeg(2,&head);
+     struct  node*head=NULL;
+      addAtBeg(&head,4);
+      addAtBeg(&head,5);
+      addAtBeg(&head,6);
+      addAtBeg(&head,7);
+      
       display(head);
       delAtVal(7,&head);
       display(head);
