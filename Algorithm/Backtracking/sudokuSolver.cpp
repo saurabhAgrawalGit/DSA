@@ -124,4 +124,4 @@ int main()
     displayBoard(grid);
     
 }
-ALGORITHM
+
